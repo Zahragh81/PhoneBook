@@ -9,9 +9,9 @@ class mysqlBaseModel extends BaseModel
     public function __construct($id = null)
     {
         try {
-//
-//        $this->connection = new \PDO("mysql:dbname={$_ENV['DB_NAME']};host={$_ENV['DB_HOST']}", $_ENV['DB_USER'], $_ENV['DB_PASS']);
-//        $this->connection->exec("set names utf8;");
+            //
+            //        $this->connection = new \PDO("mysql:dbname={$_ENV['DB_NAME']};host={$_ENV['DB_HOST']}", $_ENV['DB_USER'], $_ENV['DB_PASS']);
+            //        $this->connection->exec("set names utf8;");
             $this->connection = new Medoo([
                 // [required]
                 'type' => 'mysql',
@@ -45,20 +45,21 @@ class mysqlBaseModel extends BaseModel
         } catch (Exception $e) {
             echo "Connection Faild: " . $e->getMessage();
         }
-        if(!is_null($id)){
-        return $this->find($id);
-
+        if (!is_null($id)) {
+            return $this->find($id);
         }
     }
-    public function remove(): int{
+    public function remove(): int
+    {
         $record_id = $this->{$this->primaryKey};
         return $this->delete([$this->primaryKey => $record_id]);
     }
 
-    public function Save(){
+    public function Save()
+    {
         $record_id = $this->{$this->primaryKey};
-        $this->update($this->attributes,[$this->primaryKey => $record_id]);
-    return $this->find($record_id);
+        $this->update($this->attributes, [$this->primaryKey => $record_id]);
+        return $this->find($record_id);
     }
     #create(insert)
     public function create(array $data): int
@@ -71,7 +72,7 @@ class mysqlBaseModel extends BaseModel
     public function find($id): object
     {
         $record = $this->connection->get($this->table, '*', [$this->primaryKey => $id]);
-        if(is_null($record))
+        if (is_null($record))
             return new \stdClass;
         foreach ($record as $col => $val)
             $this->attributes[$col] = $val;
@@ -80,11 +81,16 @@ class mysqlBaseModel extends BaseModel
 
     public function getAll(): array
     {
-        return $this->connection->select($this->table, '*');
+        return $this->get('*', []);
     }
 
-    public function get(array $columns, array $where): array
+    public function get($columns, array $where): array
     {
+        $page = (isset($_GET['page']) && is_numeric($_GET['page'])) ? $_GET['page'] : 1;
+
+        $start = ($page - 1) * $this->pageSize;
+        $where['LIMIT'] = [$start, $this->pageSize];
+
         return $this->connection->select($this->table, $columns, $where);
     }
 
@@ -109,9 +115,8 @@ class mysqlBaseModel extends BaseModel
     }
 
     #Sum
-    public function sum($column,array $where): int
+    public function sum($column, array $where): int
     {
-        return $this->connection->count($this->table,$column, $where);
+        return $this->connection->count($this->table, $column, $where);
     }
 }
-

@@ -10,7 +10,7 @@ class HomeController
     public function __construct()
     {
 
-        $this->contacatModel = new Contact;
+        $this->contacatModel = new Contact();
     }
     public function index()
     {
@@ -21,3 +21,15 @@ class HomeController
         view('home.index', $data);
     }
 }
+
+
+        // $faker = \Faker\Factory::create();
+
+
+        // for ($i = 0; $i < 1000; $i++) {
+        //     $this->contacatModel->create([
+        //         'name' => $faker->name(),
+        //         'mobile' =>  $faker->phoneNumber(),
+        //         'email' => $faker->email(),
+        //     ]);
+        // }
