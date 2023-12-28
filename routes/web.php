@@ -1,9 +1,10 @@
 <?php
 
 use App\Core\Routing\Route;
- Route::get('/', 'HomeController@index');
 
+Route::get('/', 'HomeController@index');
 
+Route::post('/contact/add', 'ContactController@add');
 
 // Route::get('/panel', 'PanelController@index', [Auth::class]);
 // Route::get('/post/{slug}', 'PostController@single'); 
@@ -15,5 +16,3 @@ use App\Core\Routing\Route;
 // Route::get('/archive', 'ArchiveController@index');
 // Route::get('/archive/articles', 'ArchiveController@articles');
 // Route::get('/archive/products', 'ArchiveController@products');
-
-

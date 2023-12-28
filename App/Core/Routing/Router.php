@@ -42,12 +42,11 @@ class Router
     public function findRoute(Request $request)
     {
         foreach ($this->routes as $route) {
-            if (!in_array($request->method(), $route['methods'])) {
-                return false;
-            }
-            if ($this->regex_matched($route)) {
+            if (!in_array($request->method(), $route['methods']))
+                continue;
+
+            if ($this->regex_matched($route))
                 return $route;
-            }
         }
         return null;
     }
@@ -59,9 +58,9 @@ class Router
         if (!$result) {
             return false;
         }
-        foreach($matches as $key => $value){
-            if(!is_int($key)){
-                $request->add_route_param($key,$value);
+        foreach ($matches as $key => $value) {
+            if (!is_int($key)) {
+                $request->add_route_param($key, $value);
             }
         }
         return true;
