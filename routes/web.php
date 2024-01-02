@@ -6,6 +6,8 @@ Route::get('/', 'HomeController@index');
 
 Route::post('/contact/add', 'ContactController@add');
 
+Route::get('/contact/delete/{id}', 'ContactController@delete');
+
 // Route::get('/panel', 'PanelController@index', [Auth::class]);
 // Route::get('/post/{slug}', 'PostController@single'); 
 // Route::get('/post/{slug}/comment/{cid}', 'PostController@comment');

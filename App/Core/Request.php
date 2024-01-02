@@ -25,13 +25,13 @@ class Request
   {
     $this->route_params[$key] = $value;
   }
-  public function get_route_params($key)
-  {
-    return $this->route_params;
-  }
   public function get_route_param($key)
   {
     return $this->route_params[$key];
+  }
+  public function get_route_params($key)
+  {
+    return $this->route_params;
   }
   public function params()
   {

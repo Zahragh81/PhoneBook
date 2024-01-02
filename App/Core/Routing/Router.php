@@ -32,6 +32,8 @@ class Router
     }
     private function run_route_middlware()
     {
+        if (is_null($this->current_route))
+            return;
         $middlware = $this->current_route['middleware'];
         foreach ($middlware as $middlware_class) {
             $middlware_obj = new $middlware_class;

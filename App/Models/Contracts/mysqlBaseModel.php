@@ -2,6 +2,7 @@
 
 namespace App\Models\Contracts;
 
+use Exception;
 use Medoo\Medoo;
 
 class mysqlBaseModel extends BaseModel
